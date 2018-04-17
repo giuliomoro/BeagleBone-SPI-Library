@@ -42,7 +42,7 @@ SOFTWARE.
 #define NO_OF_BYTES                      2
 
 /*Definitions specific to spidev1.0 */
-#define SPIDEV1_PATH                     "/dev/spidev1.0"
+#define SPIDEV1_PATH                     "/dev/spidev2.1"
 #define SPIDEV1_BUS_SPEED_HZ             50000
 
 
