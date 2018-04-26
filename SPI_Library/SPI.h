@@ -31,15 +31,9 @@ SOFTWARE.
 #include<stdint.h>
 
 /* Generic Definitions */
-#define SPIDEV_BYTES_NUM                 8
-#define SPIDEV_DATA_BITS_NUM             8
-#define SPIDEV_DELAY_US	                 0
 #define SPI_SS_HIGH                      1
 #define SPI_SS_LOW                       0
 #define SPI_ONE_BYTE                     1
-
-/* No. of bytes per transaction */
-#define NO_OF_BYTES                      2
 
 /*Definitions specific to spidev1.0 */
 #define SPIDEV1_PATH                     "/dev/spidev2.1"

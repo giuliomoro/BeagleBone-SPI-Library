@@ -47,10 +47,6 @@ SOFTWARE.
 static SPI_DeviceT SPI_device1;
 static struct spi_ioc_transfer	transfer_spidev1;
 
-/* Globals */
-unsigned char Tx_spi[SPIDEV_BYTES_NUM];
-unsigned char RX_spi[SPIDEV_BYTES_NUM];
-
 /****************************************************************
  * Function Name : Open_device
  * Description   : Opens the SPI device to use
@@ -187,6 +183,7 @@ int SPI_DEV1_init(unsigned long spi_bytes_no, unsigned long spi_bus_speed,
 	if(Set_SPI_speed(SPI_device1.fd_spi, SPI_device1.spi_bus_speedHZ) == -1)
 	{
 		perror("SPI: Failed to set SPI bus frequency |");
+		fprintf(stderr, "speed: %d\n", SPI_device1.spi_bus_speedHZ);
 		return -1;
 	}
 
