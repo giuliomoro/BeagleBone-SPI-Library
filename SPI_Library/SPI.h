@@ -37,8 +37,6 @@ SOFTWARE.
 
 /*Definitions specific to spidev1.0 */
 #define SPIDEV1_PATH                     "/dev/spidev2.1"
-#define SPIDEV1_BUS_SPEED_HZ             50000
-
 
 /* Enum SPI Modes*/
 typedef enum{
