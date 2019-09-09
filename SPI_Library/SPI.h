@@ -35,9 +35,6 @@ SOFTWARE.
 #define SPI_SS_LOW                       0
 #define SPI_ONE_BYTE                     1
 
-/*Definitions specific to spidev1.0 */
-#define SPIDEV1_PATH                     "/dev/spidev2.1"
-
 /* Enum SPI Modes*/
 typedef enum{
 	SPI_MODE0 = 0,
@@ -48,7 +45,7 @@ typedef enum{
 
 /*SPI device configuration structure*/
 typedef struct{
-	char* spi_dev_path;
+	const char* spi_dev_path;
 	int fd_spi;
 	unsigned long spi_bytes_num;
 	unsigned long spi_bus_speedHZ;
@@ -59,7 +56,7 @@ typedef struct{
 }SPI_DeviceT, *SPI_DevicePtr;
 
 /* SPI API's*/
-extern int Open_device(char *spi_dev_path, int *fd);
+extern int Open_device(const char *spi_dev_path, int *fd);
 extern int Set_SPI_mode(int fd, unsigned char spi_mode);
 extern int Set_SPI_bits(int fd, unsigned char bits_per_word);
 extern int Set_SPI_speed(int fd, unsigned long bus_speed_HZ);
@@ -67,12 +64,12 @@ extern void SPI_Config_init(unsigned long spi_bytes_no, unsigned long spi_bus_sp
                 unsigned char chip_select, unsigned short spi_delay,
                 unsigned char spi_bits_No, unsigned char mode_spi, SPI_DevicePtr SPI_devicePtr);
 
-/* API's to initialize and use spidev1.0 - Configure the Bus as you like*/
-extern int SPI_DEV1_init(unsigned long spi_bytes_no, unsigned long spi_bus_speed,
+/* API's to initialize and use spidev - Configure the Bus as you like*/
+extern int SPIDEV_init(const char* spidev_path, unsigned long spi_bytes_no, unsigned long spi_bus_speed,
                                            unsigned char chip_select, unsigned short spi_delay,
                                            unsigned char spi_bits_No, unsigned char mode_spi);
-extern int SPIDEV1_transfer(unsigned char *send, unsigned char *receive,
+extern int SPIDEV_transfer(unsigned char *send, unsigned char *receive,
                 unsigned char bytes_num);
-extern unsigned char SPIDEV1_single_transfer(unsigned char data_byte);
+extern unsigned char SPIDEV_single_transfer(unsigned char data_byte);
 
 #endif /* SPI_H_ */

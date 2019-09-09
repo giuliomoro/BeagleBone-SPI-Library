@@ -54,7 +54,7 @@ static struct spi_ioc_transfer	transfer_spidev1;
  * Params        @spi_dev_path: Path to the SPI device
  *               @fd: Variable to store the file handler
  ****************************************************************/
-int Open_device(char *spi_dev_path, int *fd)
+int Open_device(const char *spi_dev_path, int *fd)
 {
 	if((*fd = open(spi_dev_path, O_RDWR))<0)
 		return -1;
@@ -142,26 +142,26 @@ void SPI_Config_init(unsigned long spi_bytes_no, unsigned long spi_bus_speed,
 }
 
 /****************************************************************
- * Function Name : SPI_DEV1_init
- * Description   : Initialize and set up spidev1.0
+ * Function Name : SPIDEV_init
+ * Description   : Initialize and set up spidev
  * Returns       : 0 on success, -1 on failure
- * Params        : None
  ****************************************************************/
-int SPI_DEV1_init(unsigned long spi_bytes_no, unsigned long spi_bus_speed,
+int SPIDEV_init(const char* spidev_path, unsigned long spi_bytes_no, unsigned long spi_bus_speed,
                                            unsigned char chip_select, unsigned short spi_delay,
                                            unsigned char spi_bits_No, unsigned char mode_spi)
 {
-	/* Initialize the parameters for spidev1.0 structure */
+	/* Initialize the parameters for spidev structure */
 	SPI_Config_init(spi_bytes_no, spi_bus_speed, chip_select,
 			spi_delay, spi_bits_No, mode_spi, &SPI_device1);
 
-	/* Assign the path to the spidev1.0 for use */
-	SPI_device1.spi_dev_path = SPIDEV1_PATH;
+	/* Assign the path to the spidev for use */
+	SPI_device1.spi_dev_path = spidev_path;
 
-	/* Open the spidev1.0 device */
+	/* Open the spidev device */
 	if(Open_device(SPI_device1.spi_dev_path, &SPI_device1.fd_spi) == -1)
 	{
-		perror("SPI: Failed to open spidev1.0 |");
+		fprintf(stderr, "SPI: Failed to open %s", SPI_device1.spi_dev_path);
+		perror(" |");
 		return -1;
 	}
 
@@ -204,7 +204,7 @@ int SPI_DEV1_init(unsigned long spi_bytes_no, unsigned long spi_bus_speed,
 }
 
 /****************************************************************
- * Function Name : SPIDEV1_transfer
+ * Function Name : SPIDEV_transfer
  * Description   : Performs a SPI transaction
  * Returns       : 0 on success, -1 on failure
  * Params        @send: Points to the buffer containing the data
@@ -213,7 +213,7 @@ int SPI_DEV1_init(unsigned long spi_bytes_no, unsigned long spi_bus_speed,
  *               received bytes are stored
  * NOTE          : Good for multiple transactions
  ****************************************************************/
-int SPIDEV1_transfer(unsigned char *send, unsigned char *receive,
+int SPIDEV_transfer(unsigned char *send, unsigned char *receive,
 		unsigned char bytes_num)
 {
 	/* Points to the Tx and Rx buffer */
@@ -233,14 +233,14 @@ int SPIDEV1_transfer(unsigned char *send, unsigned char *receive,
 }
 
 /****************************************************************
- * Function Name : SPIDEV1_single_transfer
+ * Function Name : SPIDEV_single_transfer
  * Description   : Performs a single full duplex SPI transaction
  * Returns       : 0 or data on success, -1 on failure
  * Params        @data_byte: Points to the address of the variable
  *               containing the data to be sent.
  * NOTE          : Good for single transactions
  ****************************************************************/
-unsigned char SPIDEV1_single_transfer(unsigned char data_byte)
+unsigned char SPIDEV_single_transfer(unsigned char data_byte)
 {
 	unsigned char rec_byte = 0;
 
