@@ -28,6 +28,11 @@ SOFTWARE.
 #ifndef SPI_H_
 #define SPI_H_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif // __cplusplus
+
 #include<stdint.h>
 
 /* Generic Definitions */
@@ -71,5 +76,9 @@ extern int SPIDEV_init(const char* spidev_path, unsigned long spi_bytes_no, unsi
 extern int SPIDEV_transfer(unsigned char *send, unsigned char *receive,
                 unsigned char bytes_num);
 extern unsigned char SPIDEV_single_transfer(unsigned char data_byte);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* SPI_H_ */
